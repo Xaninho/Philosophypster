@@ -13,8 +13,9 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import SinglePost from './pages/SinglePost';
+import NavBar from './components/Landing-Navbar';
 
-function App() {
+/*function App() {
   return (
     <AuthProvider>
       <Router>
@@ -27,6 +28,14 @@ function App() {
         </Container>
       </Router>
     </AuthProvider>
+  );
+}*/
+
+function App() {
+  return (
+    <Router>
+      <NavBar />
+    </Router>
   );
 }
 
