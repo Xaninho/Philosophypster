@@ -14,6 +14,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import SinglePost from './pages/SinglePost';
 import NavBar from './components/Landing-Navbar';
+import Sidebar from './components/Landing-Sidebar';
 
 /*function App() {
   return (
@@ -34,6 +35,7 @@ import NavBar from './components/Landing-Navbar';
 function App() {
   return (
     <Router>
+      <Sidebar />
       <NavBar />
     </Router>
   );
