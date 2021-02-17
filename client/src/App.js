@@ -9,12 +9,11 @@ import { AuthProvider } from './context/auth';
 import AuthRoute from './util/AuthRoute';
 
 import MenuBar from './components/MenuBar';
-import Home from './pages/Home';
+//import Home from './pages/Home';
+import Home from './pages/index.js';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import SinglePost from './pages/SinglePost';
-import NavBar from './components/Landing-Navbar';
-import Sidebar from './components/Landing-Sidebar';
 
 /*function App() {
   return (
@@ -35,8 +34,7 @@ import Sidebar from './components/Landing-Sidebar';
 function App() {
   return (
     <Router>
-      <Sidebar />
-      <NavBar />
+      <Home />
     </Router>
   );
 }
