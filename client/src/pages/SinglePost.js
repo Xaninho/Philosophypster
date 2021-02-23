@@ -13,8 +13,8 @@ import {
 } from 'semantic-ui-react';
 
 import { AuthContext } from '../context/auth';
-import LikeButton from '../components/LikeButton';
-import DeleteButton from '../components/DeleteButton';
+import LikeButton from '../components/dashboard/LikeButton';
+import DeleteButton from '../components/dashboard/DeleteButton';
 
 function SinglePost(props, args={}) {
   const postId = props.match.params.postId;
