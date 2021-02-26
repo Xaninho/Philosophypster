@@ -14,6 +14,7 @@ export const homeObjOne = {
   dark: false,
   primary: true,
   darkText: true,
+  link: "/dashboard",
 };
 
 export const homeObjTwo = {
@@ -32,6 +33,7 @@ export const homeObjTwo = {
   dark: false,
   primary: true,
   darkText: true,
+  link: "/dashboard",
 };
 
 export const homeObjThree = {
@@ -50,4 +52,5 @@ export const homeObjThree = {
   dark: false,
   primary: true,
   darkText: true,
+  link: "https://github.com/Xaninho/Philosophypster",
 };

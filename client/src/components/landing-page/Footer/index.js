@@ -13,6 +13,8 @@ import {
   WebsiteRights,
   SocialIcons,
   SocialIconLink,
+  FooterLinkScroll,
+  FooterLinkExternal,
 } from "./FooterElements";
 import { FaLinkedin, FaGithub, FaTwitter } from "react-icons/fa";
 import { animateScroll as scroll } from "react-scroll";
@@ -29,30 +31,72 @@ const Footer = () => {
           <FooterLinksWrapper>
             <FooterLinkItems>
               <FooterLinkTitle>Website</FooterLinkTitle>
-              <FooterLink to="/">Home</FooterLink>
-              <FooterLink to="/">Discover</FooterLink>
-              <FooterLink to="/">Techical Info</FooterLink>
-              <FooterLink to="/">Register</FooterLink>
-              <FooterLink to="/">Login</FooterLink>
+              <FooterLinkScroll
+                onClick={toggleHome}
+                smooth={true}
+                duration={500}
+              >
+                Home
+              </FooterLinkScroll>
+              <FooterLinkScroll to="discover" smooth={true} duration={500}>
+                Discover
+              </FooterLinkScroll>
+              <FooterLinkScroll to="services" smooth={true} duration={500}>
+                Techical Info
+              </FooterLinkScroll>
+              <FooterLink to="/register">Register</FooterLink>
+              <FooterLink to="/login">Login</FooterLink>
             </FooterLinkItems>
           </FooterLinksWrapper>
 
           <FooterLinksWrapper>
             <FooterLinkItems>
               <FooterLinkTitle>Github</FooterLinkTitle>
-              <FooterLink to="/">Xaninho</FooterLink>
-              <FooterLink to="/">Code</FooterLink>
-              <FooterLink to="/">Pull Requests</FooterLink>
-              <FooterLink to="/">Wiki</FooterLink>
+              <FooterLinkExternal
+                href="https://github.com/Xaninho"
+                target="_blank"
+              >
+                Xaninho
+              </FooterLinkExternal>
+              <FooterLinkExternal
+                href="https://github.com/Xaninho/Philosophypster"
+                target="_blank"
+              >
+                Code
+              </FooterLinkExternal>
+              <FooterLinkExternal
+                href="https://github.com/Xaninho/Philosophypster/pulls"
+                target="_blank"
+              >
+                Pull Requests
+              </FooterLinkExternal>
+              <FooterLinkExternal
+                href="https://github.com/Xaninho/Philosophypster/wiki"
+                target="_blank"
+              >
+                Wiki
+              </FooterLinkExternal>
             </FooterLinkItems>
           </FooterLinksWrapper>
 
           <FooterLinksWrapper>
             <FooterLinkItems>
               <FooterLinkTitle>Contacts</FooterLinkTitle>
-              <FooterLink to="/">LinkedIn</FooterLink>
-              <FooterLink to="/">Github</FooterLink>
-              <FooterLink to="/">Twitter</FooterLink>
+              <FooterLinkExternal
+                href="https://www.linkedin.com/in/xaninho-dev/"
+                target="_blank"
+              >
+                LinkedIn
+              </FooterLinkExternal>
+              <FooterLinkExternal
+                href="https://github.com/Xaninho"
+                target="_blank"
+              >
+                Github
+              </FooterLinkExternal>
+              <FooterLinkExternal href="//www.twitter.com" target="_blank">
+                Twitter
+              </FooterLinkExternal>
             </FooterLinkItems>
           </FooterLinksWrapper>
         </FooterLinksContainer>
