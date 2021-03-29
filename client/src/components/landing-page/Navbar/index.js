@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
+import icon from "../../../assets/images/yinyang.png";
 import { IconContext } from "react-icons/lib";
 import { Button } from "../../globalStyles";
 import {
@@ -13,6 +14,7 @@ import {
   NavItemBtn,
   NavLinks,
   NavBtnLink,
+  NavLinksExternal,
 } from "./NavBarElements";
 
 function Navbar() {
@@ -38,11 +40,10 @@ function Navbar() {
 
   return (
     <>
-      <IconContext.Provider value={{ color: "#fff" }}>
+      <IconContext.Provider value={{ color: "#353535" }}>
         <Nav>
           <NavbarContainer>
             <NavLogo to="/" onClick={closeMobileMenu}>
-              <NavIcon />
               Philosophypster
             </NavLogo>
             <MobileIcon onClick={handleClick}>
@@ -55,24 +56,27 @@ function Navbar() {
                 </NavLinks>
               </NavItem>
               <NavItem>
-                <NavLinks to="/services" onClick={closeMobileMenu}>
-                  Services
+                <NavLinks to="/dashboard" onClick={closeMobileMenu}>
+                  Dashboard
                 </NavLinks>
               </NavItem>
               <NavItem>
-                <NavLinks to="/products" onClick={closeMobileMenu}>
-                  Products
-                </NavLinks>
+                <NavLinksExternal
+                  href="https://github.com/Xaninho/Philosophypster"
+                  onClick={closeMobileMenu}
+                >
+                  Github
+                </NavLinksExternal>
               </NavItem>
               <NavItemBtn>
                 {button ? (
-                  <NavBtnLink to="/sign-up">
-                    <Button primary>SIGN UP</Button>
+                  <NavBtnLink to="/login">
+                    <Button primary>Sign In</Button>
                   </NavBtnLink>
                 ) : (
-                  <NavBtnLink to="/sign-up">
+                  <NavBtnLink to="/login">
                     <Button onClick={closeMobileMenu} fontBig primary>
-                      SIGN UP
+                      Sign In
                     </Button>
                   </NavBtnLink>
                 )}

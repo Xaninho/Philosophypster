@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
 export const ServicesContainer = styled.div`
-  height: 800px;
+  height: 700px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: #cbf7ee;
+  background: #f5f5f5;
 
   @media screen and (max-width: 768px) {
     height: 1100px;
@@ -51,7 +51,6 @@ export const ServicesCard = styled.div`
   &:hover {
     transform: scale(1.02);
     transition: all 0.2s ease-in-out;
-    cursor: pointer;
   }
 `;
 
@@ -65,7 +64,7 @@ export const ServicesH1 = styled.h1`
   font-size: 2.5rem;
   color: #353535;
   margin-bottom: 64px;
-  font-family: "Playfair Display";
+  font-family: "Alegreya";
 
   @media screen and (max-width: 480px) {
     font-size: 2rem;
