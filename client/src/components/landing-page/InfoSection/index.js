@@ -1,75 +1,60 @@
 import React from "react";
-import { Button } from "../ButtonElement";
+import { Link } from "react-router-dom";
+import { Container, Button } from "../../globalStyles";
 import {
-  InfoContainer,
-  InfoWrapper,
+  InfoSec,
   InfoRow,
-  Column1,
-  Column2,
+  InfoColumn,
   TextWrapper,
   TopLine,
   Heading,
   Subtitle,
-  BtnWrap,
-  ImgWrap,
+  ImgWrapper,
   Img,
 } from "./InfoElements";
 
-const InfoSection = ({
+function InfoSection({
+  primary,
   lightBg,
-  id,
-  imgStart,
   topLine,
+  lightTopLine,
   lightText,
+  lightTextDesc,
   headline,
-  darkText,
   description,
   buttonLabel,
   img,
   alt,
-  primary,
-  dark,
-  dark2,
-  link,
-}) => {
+  imgStart,
+  start,
+}) {
   return (
-    <div>
-      <InfoContainer lightBg={lightBg} id={id}>
-        <InfoWrapper>
+    <>
+      <InfoSec lightBg={lightBg}>
+        <Container>
           <InfoRow imgStart={imgStart}>
-            <Column1>
+            <InfoColumn>
               <TextWrapper>
-                <TopLine>{topLine}</TopLine>
+                <TopLine lightTopLine={lightTopLine}>{topLine}</TopLine>
                 <Heading lightText={lightText}>{headline}</Heading>
-                <Subtitle darkText={darkText}>{description}</Subtitle>
-                <BtnWrap>
-                  <Button
-                    href={link}
-                    target="_blank"
-                    smooth={true}
-                    duration={500}
-                    spy={true}
-                    exact={true}
-                    offset={-80}
-                    primary={primary ? 1 : 0}
-                    dark={dark ? 1 : 0}
-                    dark2={dark2 ? 1 : 0}
-                  >
+                <Subtitle lightTextDesc={lightTextDesc}>{description}</Subtitle>
+                <Link to="/sign-up">
+                  <Button big fontBig primary={primary}>
                     {buttonLabel}
                   </Button>
-                </BtnWrap>
+                </Link>
               </TextWrapper>
-            </Column1>
-            <Column2>
-              <ImgWrap>
+            </InfoColumn>
+            <InfoColumn>
+              <ImgWrapper start={start}>
                 <Img src={img} alt={alt} />
-              </ImgWrap>
-            </Column2>
+              </ImgWrapper>
+            </InfoColumn>
           </InfoRow>
-        </InfoWrapper>
-      </InfoContainer>
-    </div>
+        </Container>
+      </InfoSec>
+    </>
   );
-};
+}
 
 export default InfoSection;
