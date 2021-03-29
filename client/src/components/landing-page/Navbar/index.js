@@ -1,106 +1,88 @@
 import React, { useState, useEffect } from "react";
-import { FaBars } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
+import { IconContext } from "react-icons/lib";
+import { Button } from "../../globalStyles";
 import {
   Nav,
   NavbarContainer,
-  NavbarLogo,
+  NavLogo,
+  NavIcon,
   MobileIcon,
   NavMenu,
   NavItem,
+  NavItemBtn,
   NavLinks,
-  NavBtn,
   NavBtnLink,
 } from "./NavBarElements";
-import { animateScroll as scroll } from "react-scroll";
 
-const NavBar = ({ toggle }) => {
-  const [scrollNav, setScrollNav] = useState(false);
+function Navbar() {
+  const [click, setClick] = useState(false);
+  const [button, setButton] = useState(true);
 
-  const changeNav = () => {
-    if (window.scrollY >= 80) {
-      setScrollNav(true);
+  const handleClick = () => setClick(!click);
+  const closeMobileMenu = () => setClick(false);
+
+  const showButton = () => {
+    if (window.innerWidth <= 960) {
+      setButton(false);
     } else {
-      setScrollNav(false);
+      setButton(true);
     }
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", changeNav);
+    showButton();
   }, []);
 
-  const toggleHome = () => {
-    scroll.scrollToTop();
-  };
+  window.addEventListener("resize", showButton);
 
   return (
-    <Nav scrollNav={scrollNav}>
-      <NavbarContainer>
-        <NavbarLogo to="/" onClick={toggleHome} scrollNav={scrollNav}>
-          Philosophypster
-        </NavbarLogo>
-        <MobileIcon onClick={toggle}>
-          <FaBars />
-        </MobileIcon>
-        <NavMenu>
-          <NavItem>
-            <NavLinks
-              to="about"
-              smooth={true}
-              duration={500}
-              spy={true}
-              exact="true"
-              offset={-80}
-              scrollNav={scrollNav}
-            >
-              About
-            </NavLinks>
-          </NavItem>
-          <NavItem>
-            <NavLinks
-              to="discover"
-              smooth={true}
-              duration={500}
-              spy={true}
-              exact="true"
-              offset={-80}
-              scrollNav={scrollNav}
-            >
-              Discover
-            </NavLinks>
-          </NavItem>
-          <NavItem>
-            <NavLinks
-              to="services"
-              smooth={true}
-              duration={500}
-              spy={true}
-              exact="true"
-              offset={-80}
-              scrollNav={scrollNav}
-            >
-              Technologies
-            </NavLinks>
-          </NavItem>
-          <NavItem>
-            <NavLinks
-              to="signup"
-              smooth={true}
-              duration={500}
-              spy={true}
-              exact="true"
-              offset={-80}
-              scrollNav={scrollNav}
-            >
-              Github
-            </NavLinks>
-          </NavItem>
-        </NavMenu>
-        <NavBtn>
-          <NavBtnLink to="/register">Sign In</NavBtnLink>
-        </NavBtn>
-      </NavbarContainer>
-    </Nav>
+    <>
+      <IconContext.Provider value={{ color: "#fff" }}>
+        <Nav>
+          <NavbarContainer>
+            <NavLogo to="/" onClick={closeMobileMenu}>
+              <NavIcon />
+              Philosophypster
+            </NavLogo>
+            <MobileIcon onClick={handleClick}>
+              {click ? <FaTimes /> : <FaBars />}
+            </MobileIcon>
+            <NavMenu onClick={handleClick} click={click}>
+              <NavItem>
+                <NavLinks to="/" onClick={closeMobileMenu}>
+                  Home
+                </NavLinks>
+              </NavItem>
+              <NavItem>
+                <NavLinks to="/services" onClick={closeMobileMenu}>
+                  Services
+                </NavLinks>
+              </NavItem>
+              <NavItem>
+                <NavLinks to="/products" onClick={closeMobileMenu}>
+                  Products
+                </NavLinks>
+              </NavItem>
+              <NavItemBtn>
+                {button ? (
+                  <NavBtnLink to="/sign-up">
+                    <Button primary>SIGN UP</Button>
+                  </NavBtnLink>
+                ) : (
+                  <NavBtnLink to="/sign-up">
+                    <Button onClick={closeMobileMenu} fontBig primary>
+                      SIGN UP
+                    </Button>
+                  </NavBtnLink>
+                )}
+              </NavItemBtn>
+            </NavMenu>
+          </NavbarContainer>
+        </Nav>
+      </IconContext.Provider>
+    </>
   );
-};
+}
 
-export default NavBar;
+export default Navbar;
