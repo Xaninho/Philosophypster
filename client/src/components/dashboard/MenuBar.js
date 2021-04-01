@@ -247,42 +247,4 @@ function MenuBar() {
   return menuBar;
 }
 
-{
-  /*<Menu pointing secondary size="massive" color="teal">
-  <Menu.Item name={user.username} active as={Link} to="/" />
-
-  <Menu.Menu position="right">
-    <Menu.Item name="logout" onClick={logout} />
-  </Menu.Menu>
-</Menu>;
-
-
-<Menu pointing secondary size="massive" color="teal">
-      <Menu.Item
-        name="dashboard"
-        active={activeItem === "dashboard"}
-        onClick={handleItemClick}
-        as={Link}
-        to="/dashboard"
-      />
-
-      <Menu.Menu position="right">
-        <Menu.Item
-          name="login"
-          active={activeItem === "login"}
-          onClick={handleItemClick}
-          as={Link}
-          to="/login"
-        />
-        <Menu.Item
-          name="register"
-          active={activeItem === "register"}
-          onClick={handleItemClick}
-          as={Link}
-          to="/register"
-        />
-      </Menu.Menu>
-    </Menu>*/
-}
-
 export default MenuBar;
