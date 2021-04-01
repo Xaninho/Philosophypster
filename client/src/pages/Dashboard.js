@@ -4,12 +4,10 @@ import { useQuery } from "@apollo/react-hooks";
 
 import { AuthContext } from "../context/auth";
 import PostCard from "../components/dashboard/PostCard";
-import PostForm from "../components/dashboard/PostForm";
 import { FETCH_POSTS_QUERY } from "../util/graphql";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
 
 const useStyles = makeStyles((theme) => ({
   root: {
