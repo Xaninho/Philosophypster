@@ -25,6 +25,9 @@ const theme = createMuiTheme({
     secondary: {
       main: "#4b59f7",
     },
+    likePink: {
+      main: "#FF5CCC",
+    },
   },
 });
 

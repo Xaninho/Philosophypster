@@ -2,7 +2,6 @@ import React, { useContext, useState, useRef } from "react";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import moment from "moment";
-import { Button, Icon, Label } from "semantic-ui-react";
 
 import {
   Grid,
@@ -13,9 +12,12 @@ import {
   Typography,
   CardActions,
   Avatar,
+  IconButton,
+  Badge,
+  Button,
 } from "@material-ui/core";
 
-import { Button as BButton } from "@material-ui/core";
+import ForumIcon from "@material-ui/icons/Forum";
 
 import { AuthContext } from "../context/auth";
 import LikeButton from "../components/dashboard/LikeButton";
@@ -85,25 +87,25 @@ function SinglePost(props, args = {}) {
             </CardContent>
             <CardActions>
               <LikeButton user={user} post={{ id, likeCount, likes }} />
-              <Button
-                as="div"
-                labelPosition="right"
-                onClick={() => console.log("Comment on post")}
-              >
-                <Button basic color="blue">
-                  <Icon name="comments" />
-                </Button>
-                <Label basic color="blue" pointing="left">
-                  {commentCount}
-                </Label>
-              </Button>
+              <IconButton aria-label="Comment on Post">
+                <Badge
+                  badgeContent={commentCount}
+                  color="secondary"
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
+                  }}
+                >
+                  <ForumIcon />
+                </Badge>
+              </IconButton>
               {user && user.username === username && (
                 <DeleteButton postId={id} callback={deletePostCallback} />
               )}
             </CardActions>
           </Card>
           {user && (
-            <Card>
+            <Card style={{ marginTop: 30 }}>
               <CardContent>
                 <form noValidate autoComplete="off">
                   <h3>Post a comment</h3>
@@ -115,7 +117,7 @@ function SinglePost(props, args = {}) {
                     onChange={(event) => setComment(event.target.value)}
                     ref={commentInputRef}
                   />
-                  <BButton
+                  <Button
                     variant="contained"
                     color="primary"
                     type="submit"
@@ -123,7 +125,7 @@ function SinglePost(props, args = {}) {
                     onClick={submitComment}
                   >
                     Submit
-                  </BButton>
+                  </Button>
                 </form>
               </CardContent>
             </Card>

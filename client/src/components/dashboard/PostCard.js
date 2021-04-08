@@ -12,9 +12,12 @@ import {
   Typography,
   CardHeader,
   CardContent,
+  IconButton,
+  Badge,
 } from "@material-ui/core";
 
-import { Button, Icon, Label } from "semantic-ui-react";
+import ForumIcon from "@material-ui/icons/Forum";
+
 import LikeButton from "./LikeButton";
 import DeleteButton from "./DeleteButton";
 import MyPopup from "../../util/MyPopup";
@@ -43,18 +46,25 @@ function PostCard({
       <CardContent>
         <Typography paragraph>{body}</Typography>
       </CardContent>
+
       <CardActions>
         <LikeButton user={user} post={{ id, likes, likeCount }} />
-        <MyPopup content="Comment on post">
-          <Button labelPosition="right" as={Link} to={`/posts/${id}`}>
-            <Button color="blue" basic>
-              <Icon name="comments" />
-            </Button>
-            <Label basic color="blue" pointing="left">
-              {commentCount}
-            </Label>
-          </Button>
-        </MyPopup>
+        <IconButton
+          aria-label="Comment on Post"
+          component={Link}
+          to={`/posts/${id}`}
+        >
+          <Badge
+            badgeContent={commentCount}
+            color="secondary"
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
+          >
+            <ForumIcon />
+          </Badge>
+        </IconButton>
         {user && user.username === username && <DeleteButton postId={id} />}
       </CardActions>
     </Card>
