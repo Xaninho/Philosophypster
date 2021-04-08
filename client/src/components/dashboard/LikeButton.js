@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useMutation } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
-import { Button, Label, Icon } from 'semantic-ui-react';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useMutation } from "@apollo/react-hooks";
+import gql from "graphql-tag";
+import { IconButton, Badge } from "@material-ui/core";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 
 function LikeButton({ user, post: { id, likeCount, likes } }) {
   const [liked, setLiked] = useState(false);
@@ -14,43 +15,45 @@ function LikeButton({ user, post: { id, likeCount, likes } }) {
   }, [user, likes]);
 
   const [likePost] = useMutation(LIKE_POST_MUTATION, {
-    variables: { postId: id }
+    variables: { postId: id },
   });
 
   const likeButton = user ? (
     liked ? (
-      <Button color="teal">
-        <Icon name="heart" />
-      </Button>
+      <FavoriteIcon color="primary" />
     ) : (
-      <Button color="teal" basic>
-        <Icon name="heart" />
-      </Button>
+      <FavoriteIcon />
     )
   ) : (
-    <Button as={Link} to="/login" color="teal" basic>
-      <Icon name="heart" />
-    </Button>
+    <FavoriteIcon href="/login" />
   );
 
-  return (
-    
-    user? (
-    <Button as="div" labelPosition="right" onClick={likePost}>
-      {likeButton}
-      <Label basic color="teal" pointing="left">
-        {likeCount}
-      </Label>
-    </Button>
-    ) : (
-    <Button as="div" labelPosition="right" href='/login'>
-      {likeButton}
-      <Label basic color="teal" pointing="left">
-        {likeCount}
-      </Label>
-    </Button>
-    )
-
+  return user ? (
+    <IconButton aria-label="Like Post" onClick={likePost}>
+      <Badge
+        badgeContent={likeCount}
+        color="primary"
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+      >
+        {likeButton}
+      </Badge>
+    </IconButton>
+  ) : (
+    <IconButton aria-label="Like Post" href="/login">
+      <Badge
+        badgeContent={likeCount}
+        color="primary"
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+      >
+        {likeButton}
+      </Badge>
+    </IconButton>
   );
 }
 

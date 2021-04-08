@@ -2,15 +2,22 @@ import React, { useContext, useState, useRef } from "react";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import moment from "moment";
+
 import {
-  Button,
-  Card,
-  Form,
   Grid,
-  Image,
-  Icon,
-  Label,
-} from "semantic-ui-react";
+  Card,
+  TextField,
+  CardHeader,
+  CardContent,
+  Typography,
+  CardActions,
+  Avatar,
+  IconButton,
+  Badge,
+  Button,
+} from "@material-ui/core";
+
+import ForumIcon from "@material-ui/icons/Forum";
 
 import { AuthContext } from "../context/auth";
 import LikeButton from "../components/dashboard/LikeButton";
@@ -60,84 +67,91 @@ function SinglePost(props, args = {}) {
     } = getPost;
 
     postMarkup = (
-      <Grid>
-        <Grid.Row>
-          <Grid.Column width={2}>
-            <Image
-              src="https://react.semantic-ui.com/images/avatar/large/molly.png"
-              size="small"
-              float="right"
+      <main style={{ marginTop: 100 }}>
+        <Grid>
+          <Card>
+            <CardHeader
+              avatar={
+                <Avatar
+                  aria-label="recipe"
+                  src="https://react.semantic-ui.com/images/avatar/large/molly.png"
+                />
+              }
+              title={username}
+              subheader={moment(createdAt).fromNow()}
             />
-          </Grid.Column>
-          <Grid.Column width={10}>
-            <Card fluid>
-              <Card.Content>
-                <Card.Header>{username}</Card.Header>
-                <Card.Meta>{moment(createdAt).fromNow()}</Card.Meta>
-                <Card.Description>{body}</Card.Description>
-              </Card.Content>
-              <hr />
-              <Card.Content extra>
-                <LikeButton user={user} post={{ id, likeCount, likes }} />
-                <Button
-                  as="div"
-                  labelPosition="right"
-                  onClick={() => console.log("Comment on post")}
+            <CardContent>
+              <Typography variant="body2" color="textSecondary" component="p">
+                {body}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <LikeButton user={user} post={{ id, likeCount, likes }} />
+              <IconButton aria-label="Comment on Post">
+                <Badge
+                  badgeContent={commentCount}
+                  color="secondary"
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
+                  }}
                 >
-                  <Button basic color="blue">
-                    <Icon name="comments" />
+                  <ForumIcon />
+                </Badge>
+              </IconButton>
+              {user && user.username === username && (
+                <DeleteButton postId={id} callback={deletePostCallback} />
+              )}
+            </CardActions>
+          </Card>
+          {user && (
+            <Card style={{ marginTop: 30 }}>
+              <CardContent>
+                <form noValidate autoComplete="off">
+                  <h3>Post a comment</h3>
+                  <TextField
+                    label="Comment..."
+                    variant="outlined"
+                    name="comment"
+                    type="text"
+                    onChange={(event) => setComment(event.target.value)}
+                    ref={commentInputRef}
+                  />
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    disabled={comment.trim() === ""}
+                    onClick={submitComment}
+                  >
+                    Submit
                   </Button>
-                  <Label basic color="blue" pointing="left">
-                    {commentCount}
-                  </Label>
-                </Button>
-                {user && user.username === username && (
-                  <DeleteButton postId={id} callback={deletePostCallback} />
-                )}
-              </Card.Content>
+                </form>
+              </CardContent>
             </Card>
-            {user && (
-              <Card fluid>
-                <Card.Content>
-                  <p>Post a comment</p>
-                  <Form>
-                    <div className="ui action input fluid">
-                      <input
-                        type="text"
-                        placeholder="Comment.."
-                        name="comment"
-                        value={comment}
-                        onChange={(event) => setComment(event.target.value)}
-                        ref={commentInputRef}
-                      />
-                      <button
-                        type="submit"
-                        className="ui button teal"
-                        disabled={comment.trim() === ""}
-                        onClick={submitComment}
-                      >
-                        Submit
-                      </button>
-                    </div>
-                  </Form>
-                </Card.Content>
-              </Card>
-            )}
-            {comments.map((comment) => (
-              <Card fluid key={comment.id}>
-                <Card.Content>
-                  {user && user.username === comment.username && (
-                    <DeleteButton postId={id} commentId={comment.id} />
-                  )}
-                  <Card.Header>{comment.username}</Card.Header>
-                  <Card.Meta>{moment(comment.createdAt).fromNow()}</Card.Meta>
-                  <Card.Description>{comment.body}</Card.Description>
-                </Card.Content>
-              </Card>
-            ))}
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+          )}
+          {comments.map((comment) => (
+            <Card key={comment.id}>
+              <CardHeader
+                avatar={
+                  <Avatar
+                    aria-label="recipe"
+                    src="https://react.semantic-ui.com/images/avatar/large/molly.png"
+                  />
+                }
+                title={comment.username}
+                subheader={moment(comment.createdAt).fromNow()}
+              />
+              <CardContent>
+                {user && user.username === comment.username && (
+                  <DeleteButton postId={id} commentId={comment.id} />
+                )}
+                <Typography>{comment.body}</Typography>
+              </CardContent>
+            </Card>
+          ))}
+        </Grid>
+      </main>
     );
   }
   return postMarkup;

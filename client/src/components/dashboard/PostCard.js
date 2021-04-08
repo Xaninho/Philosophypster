@@ -1,46 +1,72 @@
-import React, { useContext } from 'react';
-import { Button, Card, Icon, Label, Image } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
-import moment from 'moment';
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import moment from "moment";
+import { AuthContext } from "../../context/auth";
 
-import { AuthContext } from '../../context/auth';
-import LikeButton from './LikeButton';
-import DeleteButton from './DeleteButton';
-import MyPopup from '../../util/MyPopup';
+// Material UI
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  Card,
+  CardActions,
+  Avatar,
+  Typography,
+  CardHeader,
+  CardContent,
+  IconButton,
+  Badge,
+} from "@material-ui/core";
+
+import ForumIcon from "@material-ui/icons/Forum";
+
+import LikeButton from "./LikeButton";
+import DeleteButton from "./DeleteButton";
+import MyPopup from "../../util/MyPopup";
+
+const useStyles = makeStyles((theme) => ({
+  card: {
+    width: 300,
+    height: 200,
+    margin: 10,
+  },
+}));
 
 function PostCard({
-  post: { body, createdAt, id, username, likeCount, commentCount, likes }
+  post: { body, createdAt, id, username, likeCount, commentCount, likes },
 }) {
   const { user } = useContext(AuthContext);
+  const classes = useStyles();
 
   return (
-    <Card fluid>
-      <Card.Content>
-        <Image
-          floated="right"
-          size="mini"
-          src="https://react.semantic-ui.com/images/avatar/large/molly.png"
-        />
-        <Card.Header>{username}</Card.Header>
-        <Card.Meta as={Link} to={`/posts/${id}`}>
-          {moment(createdAt).fromNow(true)}
-        </Card.Meta>
-        <Card.Description>{body}</Card.Description>
-      </Card.Content>
-      <Card.Content extra>
+    <Card className={classes.card}>
+      <CardHeader
+        avatar={<Avatar>R</Avatar>}
+        title={username}
+        subheader={moment(createdAt).fromNow(true)}
+      />
+      <CardContent>
+        <Typography paragraph>{body}</Typography>
+      </CardContent>
+
+      <CardActions>
         <LikeButton user={user} post={{ id, likes, likeCount }} />
-        <MyPopup content="Comment on post">
-          <Button labelPosition="right" as={Link} to={`/posts/${id}`}>
-            <Button color="blue" basic>
-              <Icon name="comments" />
-            </Button>
-            <Label basic color="blue" pointing="left">
-              {commentCount}
-            </Label>
-          </Button>
-        </MyPopup>
+        <IconButton
+          aria-label="Comment on Post"
+          component={Link}
+          to={`/posts/${id}`}
+        >
+          <Badge
+            badgeContent={commentCount}
+            color="secondary"
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
+          >
+            <ForumIcon />
+          </Badge>
+        </IconButton>
         {user && user.username === username && <DeleteButton postId={id} />}
-      </Card.Content>
+      </CardActions>
     </Card>
   );
 }
