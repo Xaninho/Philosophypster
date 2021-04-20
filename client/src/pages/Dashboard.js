@@ -1,10 +1,9 @@
 import React, { useContext } from "react";
 import { useQuery } from "@apollo/react-hooks";
-//import { Grid, Transition } from "semantic-ui-react";
 
 import { AuthContext } from "../context/auth";
 import PostCard from "../components/dashboard/PostCard";
-import { FETCH_POSTS_QUERY } from "../util/graphql";
+import { FETCH_POSTS_QUERY } from "../util/gqlQueries";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -25,8 +24,9 @@ const useStyles = makeStyles((theme) => ({
 function Dashboard() {
   const { user } = useContext(AuthContext);
   let posts = "";
-  const { loading, data } = useQuery(FETCH_POSTS_QUERY);
 
+  // Runs the GraphQL Query to fetch data
+  const { loading, data } = useQuery(FETCH_POSTS_QUERY);
   if (data) {
     posts = data.getPosts;
   }
@@ -36,8 +36,12 @@ function Dashboard() {
 
   return (
     <section className={classes.root}>
-      <h1 style={{ textAlign: "center", marginBottom: 50 }}>RecentPosts</h1>
+      <h1 style={{ textAlign: "left", marginBottom: 50 }}>
+        Good Morning! What are your thoughts today?
+      </h1>
+
       <Grid container justify="center" spacing={spacing}>
+        {/* For Each Post, creates a PostCard */}
         {posts &&
           posts.map((post) => (
             <Grid key={post.id}>

@@ -1,5 +1,8 @@
-import { useState } from 'react';
+// Custom React hooks
 
+import { useState } from "react";
+
+// Exports a custom useForm hook with various Form functions
 export const useForm = (callback, initialState = {}) => {
   const [values, setValues] = useState(initialState);
 
@@ -15,6 +18,6 @@ export const useForm = (callback, initialState = {}) => {
   return {
     onChange,
     onSubmit,
-    values
+    values,
   };
 };

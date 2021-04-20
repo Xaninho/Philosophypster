@@ -1,12 +1,11 @@
 import React, { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
+import { TextField, Button } from "@material-ui/core";
 
 import { AuthContext } from "../context/auth";
 import { useForm } from "../util/hooks";
-
-import { TextField, Button } from "@material-ui/core";
+import { LOGIN_USER } from "../util/gqlQueries";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,11 +22,13 @@ function Login(props) {
 
   const classes = useStyles();
 
+  // Uses functions from a custom created Hook
   const { onChange, onSubmit, values } = useForm(loginUserCallback, {
     username: "",
     password: "",
   });
 
+  // Logs in with the user Data and redirects to the Dashboard
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     update(_, { data: { login: userData } }) {
       context.login(userData);
@@ -39,6 +40,7 @@ function Login(props) {
     variables: values,
   });
 
+  // Calls the loginUser function from the custom Hook
   function loginUserCallback() {
     loginUser();
   }
@@ -74,6 +76,7 @@ function Login(props) {
           Login
         </Button>
       </form>
+      {/* If any errors, displays them */}
       {Object.keys(errors).length > 0 && (
         <div className="ui error message">
           <ul className="list">
@@ -86,17 +89,5 @@ function Login(props) {
     </div>
   );
 }
-
-const LOGIN_USER = gql`
-  mutation login($username: String!, $password: String!) {
-    login(username: $username, password: $password) {
-      id
-      email
-      username
-      createdAt
-      token
-    }
-  }
-`;
 
 export default Login;
