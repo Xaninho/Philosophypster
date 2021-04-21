@@ -1,8 +1,6 @@
 import React, { useContext, useState, useRef } from "react";
-import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import moment from "moment";
-
 import {
   Grid,
   Card,
@@ -16,9 +14,9 @@ import {
   Badge,
   Button,
 } from "@material-ui/core";
-
 import ForumIcon from "@material-ui/icons/Forum";
 
+import { SUBMIT_COMMENT_MUTATION, FETCH_POST_QUERY } from "../util/gqlQueries";
 import { AuthContext } from "../context/auth";
 import LikeButton from "../components/dashboard/LikeButton";
 import DeleteButton from "../components/dashboard/DeleteButton";
@@ -30,12 +28,14 @@ function SinglePost(props, args = {}) {
 
   const [comment, setComment] = useState("");
 
+  // Gets the Post ID
   const { data: { getPost } = args } = useQuery(FETCH_POST_QUERY, {
     variables: {
       postId,
     },
   });
 
+  // When it updates, empties the input and defocuses it
   const [submitComment] = useMutation(SUBMIT_COMMENT_MUTATION, {
     update() {
       setComment("");
@@ -51,6 +51,7 @@ function SinglePost(props, args = {}) {
     props.history.push("/");
   }
 
+  // While it doesn't get the post, displays a loading message
   let postMarkup;
   if (!getPost) {
     postMarkup = <p>Loading post..</p>;
@@ -104,6 +105,7 @@ function SinglePost(props, args = {}) {
               )}
             </CardActions>
           </Card>
+          {/* Show comment input if user is logged in */}
           {user && (
             <Card style={{ marginTop: 30 }}>
               <CardContent>
@@ -130,6 +132,7 @@ function SinglePost(props, args = {}) {
               </CardContent>
             </Card>
           )}
+          {/* Displays each comment */}
           {comments.map((comment) => (
             <Card key={comment.id}>
               <CardHeader
@@ -156,42 +159,5 @@ function SinglePost(props, args = {}) {
   }
   return postMarkup;
 }
-
-const SUBMIT_COMMENT_MUTATION = gql`
-  mutation($postId: String!, $body: String!) {
-    createComment(postId: $postId, body: $body) {
-      id
-      comments {
-        id
-        body
-        createdAt
-        username
-      }
-      commentCount
-    }
-  }
-`;
-
-const FETCH_POST_QUERY = gql`
-  query($postId: ID!) {
-    getPost(postId: $postId) {
-      id
-      body
-      createdAt
-      username
-      likeCount
-      likes {
-        username
-      }
-      commentCount
-      comments {
-        id
-        username
-        createdAt
-        body
-      }
-    }
-  }
-`;
 
 export default SinglePost;

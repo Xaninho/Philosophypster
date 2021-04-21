@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
 import { IconButton, Badge } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+
+import { LIKE_POST_MUTATION } from "../../util/gqlQueries";
 
 function LikeButton({ user, post: { id, likeCount, likes } }) {
   const [liked, setLiked] = useState(false);
 
+  // If the user has any likes, set like
   useEffect(() => {
     if (user && likes.find((like) => like.username === user.username)) {
       setLiked(true);
@@ -18,6 +20,7 @@ function LikeButton({ user, post: { id, likeCount, likes } }) {
     variables: { postId: id },
   });
 
+  // If the user exists and /or has liked, show the respective Icon
   const likeButton = user ? (
     liked ? (
       <FavoriteIcon color="primary" />
@@ -25,7 +28,7 @@ function LikeButton({ user, post: { id, likeCount, likes } }) {
       <FavoriteIcon />
     )
   ) : (
-    <FavoriteIcon href="/login" />
+    <FavoriteIcon as={Link} to="/login" />
   );
 
   return user ? (
@@ -56,18 +59,5 @@ function LikeButton({ user, post: { id, likeCount, likes } }) {
     </IconButton>
   );
 }
-
-const LIKE_POST_MUTATION = gql`
-  mutation likePost($postId: ID!) {
-    likePost(postId: $postId) {
-      id
-      likes {
-        id
-        username
-      }
-      likeCount
-    }
-  }
-`;
 
 export default LikeButton;

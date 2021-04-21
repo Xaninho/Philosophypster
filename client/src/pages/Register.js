@@ -1,12 +1,11 @@
 import React, { useState, useContext } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import { makeStyles } from "@material-ui/core/styles";
-import gql from "graphql-tag";
+import { TextField, Button } from "@material-ui/core";
 
 import { AuthContext } from "../context/auth";
 import { useForm } from "../util/hooks";
-
-import { TextField, Button } from "@material-ui/core";
+import { REGISTER_USER } from "../util/gqlQueries";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,9 +19,9 @@ const useStyles = makeStyles((theme) => ({
 function Register(props) {
   const context = useContext(AuthContext);
   const [errors, setErrors] = useState({});
-
   const classes = useStyles();
 
+  // Uses functions from a custom created Hook
   const { onChange, onSubmit, values } = useForm(registerUser, {
     username: "",
     email: "",
@@ -30,6 +29,7 @@ function Register(props) {
     confirmPassword: "",
   });
 
+  // Logs in with the user Data and redirects to the Dashboard
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
     update(_, { data: { register: userData } }) {
       context.login(userData);
@@ -41,6 +41,7 @@ function Register(props) {
     variables: values,
   });
 
+  // Calls the addUser function from the custom Hook
   function registerUser() {
     addUser();
   }
@@ -94,6 +95,8 @@ function Register(props) {
           Register
         </Button>
       </form>
+
+      {/* If any errors, displays them */}
       {Object.keys(errors).length > 0 && (
         <div className="ui error message">
           <ul className="list">
@@ -106,29 +109,5 @@ function Register(props) {
     </div>
   );
 }
-
-const REGISTER_USER = gql`
-  mutation register(
-    $username: String!
-    $email: String!
-    $password: String!
-    $confirmPassword: String!
-  ) {
-    register(
-      registerInput: {
-        username: $username
-        email: $email
-        password: $password
-        confirmPassword: $confirmPassword
-      }
-    ) {
-      id
-      email
-      username
-      createdAt
-      token
-    }
-  }
-`;
 
 export default Register;

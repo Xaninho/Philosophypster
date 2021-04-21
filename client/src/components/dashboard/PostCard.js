@@ -1,9 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import { AuthContext } from "../../context/auth";
-
-// Material UI
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Card,
@@ -15,9 +12,9 @@ import {
   IconButton,
   Badge,
 } from "@material-ui/core";
-
 import ForumIcon from "@material-ui/icons/Forum";
 
+import { AuthContext } from "../../context/auth";
 import LikeButton from "./LikeButton";
 import DeleteButton from "./DeleteButton";
 import MyPopup from "../../util/MyPopup";
@@ -39,7 +36,7 @@ function PostCard({
   return (
     <Card className={classes.card}>
       <CardHeader
-        avatar={<Avatar>R</Avatar>}
+        avatar={<Avatar>A</Avatar>}
         title={username}
         subheader={moment(createdAt).fromNow(true)}
       />
@@ -65,6 +62,7 @@ function PostCard({
             <ForumIcon />
           </Badge>
         </IconButton>
+        {/* If the owner of the post, show a delete button */}
         {user && user.username === username && <DeleteButton postId={id} />}
       </CardActions>
     </Card>

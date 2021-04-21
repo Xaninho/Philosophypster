@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import { Container } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
@@ -14,7 +14,6 @@ import MenuBar from "./components/dashboard/MenuBar";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import SinglePost from "./pages/SinglePost";
-
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 const theme = createMuiTheme({
@@ -34,10 +33,9 @@ const theme = createMuiTheme({
 function App() {
   return (
     <MuiThemeProvider theme={theme}>
-      <Router>
+      <BrowserRouter>
         <Switch>
           <Route path="/" component={Home} exact />
-
           <AuthProvider>
             <Container>
               <MenuBar />
@@ -48,7 +46,7 @@ function App() {
             </Container>
           </AuthProvider>
         </Switch>
-      </Router>
+      </BrowserRouter>
     </MuiThemeProvider>
   );
 }
